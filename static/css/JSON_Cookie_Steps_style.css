@@ -1,0 +1,201 @@
+/******************************************************************************\
+ * JSON_Cookie_Steps_style.css                                                *
+ * -------------------------------------------------------------------------- *
+ * Styling properties for the JSON_Cookie_Steps project.                      *
+\******************************************************************************/
+
+/********************************************************\
+ * Color Scheme                                         *
+ * ---------------------------------------------------- *
+ * Dark Blue (#12A1E0)
+ * Medium Blue (#8DD5F4)
+ * Light Blue (#BEDCE8)
+ * Lighter Blue (#BDDCE8)
+ * Dark Grey (#8E8E8E)
+ * Light Grey (#CCC)
+ * White (#FEFEFE)
+\********************************************************/
+
+body, html{
+    height: 100%;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.clear{
+    clear: both;
+}
+/********************************************************\
+ * base.html                                            *
+\********************************************************/
+#site_container{
+    /* Lighter Blue */
+    background: #BDDCE8;
+    height: 100%;
+    position: relative;
+    width: 100%;
+}
+#footer_container{
+    /* Medium Blue */
+    background: #8DD5F4;
+    /* Dark Grey */
+    border-top: 3px solid #8E8E8E;
+    bottom: 0;
+    height: 50px;
+    position: absolute;
+    text-align: right;
+    width: 100%;
+}
+    #footer_label{
+        padding-right: 50px;
+        padding-top: 10px;
+        position: relative;
+    }
+/********************************************************\
+ * home.html                                            *
+\********************************************************/
+#site_content{
+    /* Dark Blue */
+    background: #12A1E0;
+    /* Dark Grey */
+    border-top: 3px solid #8E8E8E;
+    border-right: 3px solid #8E8E8E;
+    height: 600px;
+    left: 7%;
+    position: relative;
+    top: 3%;
+    width: 1100px;
+    border-radius: 25px;
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 25px;
+    /* Light Grey */
+    box-shadow: 5px 5px 20px #CCC;
+    -moz-box-shadow: 5px 5px 20px #CCC;
+    -webkit-box-shadow: 5px 5px 20px #CCC;
+}
+    #content_header_container{
+        /* Medium Blue */
+        background: #8DD5F4;
+        /* Light Grey */
+        border-top: 2px solid #CCC;
+        border-right: 2px solid #CCC;
+        height: 10%;
+        left: 11px;
+        position: relative;
+        top: 10px;
+        width: 98%;
+        border-radius: 15px;
+        -moz-border-radius: 15px;
+        -webkit-border-radius: 15px;
+    }
+        #content_header_label{
+            float: left;
+            font-size: 2em;
+            position: relative;
+            margin-left: 40%;
+            margin-top: 10px;
+        }
+        #content_header_cookie_id_container{
+            float: right;
+            margin-right: 50px;
+            margin-top: 18px;
+            position: relative;
+        }
+            #cookie_name{
+            }
+    #content_progress_bar_container{
+        /* Medium Blue */
+        background: #8DD5F4;
+        /* Light Grey */
+        border-top: 2px solid #CCC;
+        border-right: 2px solid #CCC;
+        height: 10%;
+        left: 28px;
+        position: relative;
+        top: 20px;
+        width: 95%;
+        border-radius: 15px;
+        -moz-border-radius: 15px;
+        -webkit-border-radius: 15px;
+    }
+        .progress_bar_base_style{
+            /* Dark Grey */
+            border-top: 3px solid #8E8E8E;
+            border-right: 3px solid #8E8E8E;
+            cursor: pointer;
+            float: left;
+            height: 54%;
+            margin-left: 41px;
+            padding-top: 12px;
+            position: relative;
+            text-align: center;
+            top: 4px;
+            width: 15%;
+            border-radius: 15px;
+            -moz-border-radius: 15px;
+            -webkit-border-radius: 15px;
+        }
+        .progress_bar_active{
+            /* Lighter Blue */
+            background: #BDDCE8; 
+        }
+        .progress_bar_inactive{
+            /* Light Grey */
+            background: #CCC;
+        }
+        .progress_bar_completed{
+        }
+        #content_progress_bar_one{
+        }
+        #content_progress_bar_two{
+        }
+        #content_progress_bar_three{
+        }
+        #content_progress_bar_four{
+        }
+        #content_progress_bar_five{
+        }
+    #content_nav_back{
+        /* Dark Grey */
+        border-left: 3px solid #8E8E8E;
+        margin-left: 17px;
+    }
+    #content_nav_forward{
+        /* Dark Grey */
+        border-right: 3px solid #8E8E8E;
+        margin-left: 43px;
+    }
+    .content_nav_base_style{
+        /* Light Grey */
+        background: #CCC;
+        cursor: pointer;
+        float: left;
+        font-size: 6em;
+        height: 49%;
+        padding-top: 147px;
+        position: relative;
+        top: 28px;
+        width: 5%;
+    }
+    .content_nav_base_active{
+    }
+    .content_nav_base_inactive{
+        /* Dark Grey */
+        color: #8E8E8E;
+    }
+    #content_container{
+        /* Medium Blue */
+        background: #8DD5F4;
+        /* Light Grey */
+        border: 2px solid #CCC;
+        float: left;
+        height: 70%;
+        left: 21px;
+        position: relative;
+        top: 32px;
+        width: 82%;
+    }
+        #content_step_one_container{
+            height: 100%;
+            position: relative;
+            width: 100%;
+        }

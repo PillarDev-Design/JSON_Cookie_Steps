@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block head_title %}{% endblock head_title %}
+{% block site_content %}
+<div id='site_content'>
+    <div id='content_header_container'>
+        <div id='content_header_label'>
+            Data Entry Test
+        </div>
+        <div id='content_header_cookie_id_container'>
+            Cookie ID:
+            <input id='cookie_name' type='text' value='FREAC_JSON_Cookie'></input>
+        </div>
+        <div class='clear'></div>
+    </div>
+    <div id='content_progress_bar_container'>
+        <div id='content_progress_bar_one'
+            class='progress_bar_base_style progress_bar_active'>
+            Step 1
+        </div>
+        <div id='content_progress_bar_two'
+            class='progress_bar_base_style progress_bar_inactive'>
+            Step 2
+        </div>
+        <div id='content_progress_bar_three'
+            class='progress_bar_base_style progress_bar_inactive'>
+            Step 3
+        </div>
+        <div id='content_progress_bar_four'
+            class='progress_bar_base_style progress_bar_inactive'>
+            Step 4
+        </div>
+        <div id='content_progress_bar_five'
+            class='progress_bar_base_style progress_bar_inactive'>
+            Step 5
+        </div>
+        <div class='clear'></div>
+    </div>
+    <div id='content_nav_back'
+        class='content_nav_base_style content_nav_base_inactive'>«</div>
+    <div id='content_container'>
+        <div id='content_step_one_container'>
+        </div>
+    </div>
+    <div id='content_nav_forward'
+        class='content_nav_base_style content_nav_base_inactive'>»</div>
+    <div class='clear'></div>
+</div>
+{% endblock site_content %}
