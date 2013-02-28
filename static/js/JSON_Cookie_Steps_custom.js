@@ -25,6 +25,17 @@ function JSON_Cookie_Steps_Init(){
     JSON_Cookie_Step_One(cookieData);
 };
 
+function Save_Cookie(cookieData, stepNumber){
+    var name = $('#cookie_name').val(),
+        cookieArray = {
+            stepOneQuestionOne: cookieData.stepOneQuestionOne,
+            stepOneQuestionTwo: cookieData.stepOneQuestionTwo,
+            stepOneQuestionThree: cookieData.stepOneQuestionThree
+        };
+
+    $.JSONCookie(name, cookieArray, {path: '/'});
+}
+
 /***********************************************\
  * Step 1                                      *
 \***********************************************/
@@ -36,7 +47,8 @@ function JSON_Cookie_Step_One(cookieData){
         new_val,
         stepOneQuestionOneAnswer = null,
         stepOneQuestionTwoAnswer = null,
-        stepOneQuestionThreeAnswer = null;
+        stepOneQuestionThreeAnswer = null,
+        saveArray = {};
 
     // Subcategory Values
     var categoryOneSubcategories = "<option value='catOneSubOne'>Category One - Subcategory One</option><option value='catOneSubTwo'>Category One - Subcategory Two</option>",
@@ -154,6 +166,12 @@ function JSON_Cookie_Step_One(cookieData){
     $('#content_nav_forward').click(function(){
         if($('#content_nav_forward').hasClass('content_nav_base_active')){
             // Fire off Save
+            saveArray = {
+                stepOneQuestionOne: stepOneQuestionOneAnswer,
+                stepOneQuestionTwo: stepOneQuestionTwoAnswer,
+                stepOneQuestionThree: stepOneQuestionThreeAnswer
+            };
+            Save_Cookie(saveArray, "stepOne");
         } else {
             // Failure
         }
