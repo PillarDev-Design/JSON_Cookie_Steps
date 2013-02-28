@@ -13,7 +13,9 @@
  * Lighter Blue (#BDDCE8)
  * Dark Grey (#8E8E8E)
  * Light Grey (#CCC)
+ * Darker White (#E2DDD9)
  * White (#FEFEFE)
+ * Light Yellow (#FFDB4D)
 \********************************************************/
 
 body, html{
@@ -142,7 +144,9 @@ body, html{
             /* Light Grey */
             background: #CCC;
         }
-        .progress_bar_completed{
+        .progress_bar_available{
+            /* Light Yellow */
+            background: #FFDB4D;
         }
         #content_progress_bar_one{
         }
@@ -194,8 +198,77 @@ body, html{
         top: 32px;
         width: 82%;
     }
-        #content_step_one_container{
+        .content_step_scheme{
+            /* Darker White */
+            background: #E2DDD9;
             height: 100%;
             position: relative;
             width: 100%;
         }
+        .content_step_question_container_scheme{
+            /* White */
+            background: #FEFEFE;
+            /* Light Grey */
+            border-top: 2px solid #CCC;
+            border-right: 2px solid #CCC;
+            left: 41px;
+            padding: 5px;
+            position: relative;
+            width: 90%;
+            border-radius: 5px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+        }
+        .content_step_question_label_scheme{
+            float: left;
+            position: relative;
+        }
+        .content_step_question_content_scheme{
+            float: right;
+            position: relative;
+        }
+        .content_step_question_select_scheme{
+            width: 250px;
+        }
+        #content_step_one_container{
+        }
+            #content_step_one_question_one_container{
+                top: 5%;
+            }
+                #content_step_one_question_one_label{
+                }
+                #content_step_one_question_one_content{
+                }
+            #content_step_one_question_two_container{
+                top: 10%;
+            }
+                #content_step_one_question_two_label{
+                }
+                #content_step_one_question_two_content{
+                }
+            #content_step_one_question_three_container{
+                height: 100px;
+                top: 15%;
+            }
+                #content_step_one_question_three_label{
+                }
+                #content_step_one_question_three_content{
+                }
+                #content_step_one_question_three_box_one_label{
+                    float: left;
+                }
+                #content_step_one_question_three_box_one_content{
+                    float: right;
+                }
+                #content_step_one_question_three_box_two_label{
+                    float: left;
+                }
+                #content_step_one_question_three_box_two_content{
+                    float: right;
+                }
+                #content_step_one_question_three_box_three_label{
+                    float: left;
+                }
+                #content_step_one_question_three_box_three_content{
+                    float: right;
+                }

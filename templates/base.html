@@ -6,6 +6,7 @@
     <!-- JavaScript Imports -->
     <script type='text/javascript' src='/static/js/jquery-1.9.1.min.js'></script>
     <script type='text/javascript' src='/static/js/JSON_Cookie_Steps_util.js'></script>
+    <script type='text/javascript' src='/static/js/JSON_Cookie_Steps_custom.js'></script>
     <!-- CSS Imports -->
     <link href='/static/css/JSON_Cookie_Steps_style.css' rel='stylesheet' type='text/css' />
 </head>
@@ -14,12 +15,14 @@
         {% block site_content %}{% endblock site_content %}
         <div id='footer_container'>
             <div id='footer_label'>
+                <button id='console_log'>console.log</button>
                 FREAC - JSON_Cookie_Steps
             </div>
         </div>
     </div>
     <script type='text/javascript'>
         // Init
+        JSON_Cookie_Steps_Init();
     </script>
 </body>
 </html>
