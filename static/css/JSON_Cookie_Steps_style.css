@@ -231,6 +231,11 @@ body, html{
             width: 250px;
         }
         #content_step_one_container{
+            position: absolute;
+        }
+        #content_step_two_container{
+            position: absolute;
+            display: none;
         }
             #content_step_one_question_one_container{
                 top: 5%;
