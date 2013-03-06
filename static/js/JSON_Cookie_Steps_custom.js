@@ -533,16 +533,14 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
     
     // Function to check if form is complete
     function Step_Two_Form_Check(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10){
-        console.log("q1: " + q1);
-        console.log("q2: " + q2);
-        console.log("q3: " + q3);
-        console.log("q4: " + q4);
-        console.log("q5: " + q5);
-        console.log("q6: " + q6);
-        console.log("q7: " + q7);
-        console.log("q8: " + q8);
-        console.log("q9: " + q9);
-        console.log("q10: " + q10);
+        // The Date cannot be grabbed on the change or keyup event.
+        // Therefore, we are checking on each iteration of Form_Check
+        if($('#content_step_two_ipmdat_date_assessed').val === ""){
+            stepTwoIPMDATDateAssessed = null;
+        }else{
+            stepTwoIPMDATDateAssessed = $('#content_step_two_ipmdat_date_assessed').val();
+        }
+
         if((q1 !== null) && (q2 !== null) && (q3 !== null) && (q4 !== null) && (q5 !== null) && (q6 !== null) && (q7 !== null) && (q8 !== null) && (q9 !== null) && (q10 !== null)){
             if($('#content_nav_forward').hasClass('content_nav_base_inactive')){
                 // Forward
@@ -601,7 +599,7 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
         Step_Two_Form_Check(stepTwoScientificName, stepTwoCommonName, stepTwoScale, stepTwoWeedManagementArea, stepTwoConservationTargetImpacted, stepTwoProjectAreaNameAndSize, stepTwoPropertyOwner, stepTwoIPMDATDateAssessed, stepTwoAssessors, stepTwoReviewers)
     });
 
-    $('#content_step_two_scale').change(function(){
+    $('#content_step_two_scale').keyup(function(){
         if($('#content_two_scale').val() === ""){
             stepTwoScale = null;
         }else{
@@ -612,7 +610,7 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
         Step_Two_Form_Check(stepTwoScientificName, stepTwoCommonName, stepTwoScale, stepTwoWeedManagementArea, stepTwoConservationTargetImpacted, stepTwoProjectAreaNameAndSize, stepTwoPropertyOwner, stepTwoIPMDATDateAssessed, stepTwoAssessors, stepTwoReviewers)
     });
 
-    $('#content_step_two_weed_management_area').change(function(){
+    $('#content_step_two_weed_management_area').keyup(function(){
         if($('#content_two_weed_management_area').val() === ""){
             stepTwoWeedManagementArea = null;
         }else{
@@ -623,7 +621,7 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
         Step_Two_Form_Check(stepTwoScientificName, stepTwoCommonName, stepTwoScale, stepTwoWeedManagementArea, stepTwoConservationTargetImpacted, stepTwoProjectAreaNameAndSize, stepTwoPropertyOwner, stepTwoIPMDATDateAssessed, stepTwoAssessors, stepTwoReviewers)
     });
 
-    $('#content_step_two_conservation_target_impacted').change(function(){
+    $('#content_step_two_conservation_target_impacted').keyup(function(){
         if($('#content_two_conservation_target_impacted').val() === ""){
             stepTwoConservationTargetImpacted = null;
         }else{
@@ -634,7 +632,7 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
         Step_Two_Form_Check(stepTwoScientificName, stepTwoCommonName, stepTwoScale, stepTwoWeedManagementArea, stepTwoConservationTargetImpacted, stepTwoProjectAreaNameAndSize, stepTwoPropertyOwner, stepTwoIPMDATDateAssessed, stepTwoAssessors, stepTwoReviewers)
     });
 
-    $('#content_step_two_project_area_name_and_size').change(function(){
+    $('#content_step_two_project_area_name_and_size').keyup(function(){
         if($('#content_two_project_area_name_and_size').val() === ""){
             stepTwoProjectAreaNameAndSize = null;
         }else{
@@ -645,7 +643,7 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
         Step_Two_Form_Check(stepTwoScientificName, stepTwoCommonName, stepTwoScale, stepTwoWeedManagementArea, stepTwoConservationTargetImpacted, stepTwoProjectAreaNameAndSize, stepTwoPropertyOwner, stepTwoIPMDATDateAssessed, stepTwoAssessors, stepTwoReviewers)
     });
 
-    $('#content_step_two_property_owner').change(function(){
+    $('#content_step_two_property_owner').keyup(function(){
         if($('#content_two_property_owner').val() === ""){
             stepTwoPropertyOwner = null;
         }else{
@@ -656,17 +654,7 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
         Step_Two_Form_Check(stepTwoScientificName, stepTwoCommonName, stepTwoScale, stepTwoWeedManagementArea, stepTwoConservationTargetImpacted, stepTwoProjectAreaNameAndSize, stepTwoPropertyOwner, stepTwoIPMDATDateAssessed, stepTwoAssessors, stepTwoReviewers)
     });
 
-    $('#content_step_two_ipmdat_date_assessed').change(function(){
-        if($('#content_step_two_ipmdat_date_assessed').val === ""){
-            stepTwoIPMDATDateAssessed = null;
-        }else{
-            stepTwoIPMDATDateAssessed = $('#content_step_two_ipmdat_date_assessed').val();
-        }
-        // Execute Step_Two_Form_Check
-        Step_Two_Form_Check(stepTwoScientificName, stepTwoCommonName, stepTwoScale, stepTwoWeedManagementArea, stepTwoConservationTargetImpacted, stepTwoProjectAreaNameAndSize, stepTwoPropertyOwner, stepTwoIPMDATDateAssessed, stepTwoAssessors, stepTwoReviewers)
-    });
-
-    $('#content_step_two_assessors').change(function(){
+    $('#content_step_two_assessors').keyup(function(){
         if($('#content_step_two_assessors').val === ""){
             stepTwoAssessors = null;
         }else{
@@ -676,7 +664,7 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
         Step_Two_Form_Check(stepTwoScientificName, stepTwoCommonName, stepTwoScale, stepTwoWeedManagementArea, stepTwoConservationTargetImpacted, stepTwoProjectAreaNameAndSize, stepTwoPropertyOwner, stepTwoIPMDATDateAssessed, stepTwoAssessors, stepTwoReviewers)
     });
 
-    $('#content_step_two_reviewers').change(function(){
+    $('#content_step_two_reviewers').keyup(function(){
         if($('#content_step_two_reviewers').val === ""){
             stepTwoReviewers = null;
         }else{
@@ -695,15 +683,50 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
                 stepOneQuestionTwo: stepOneQuestionTwoAnswer,
                 stepOneQuestionThree: stepOneQuestionThreeAnswer
             };
-            completedSteps.push("1");
+
+            var addStepOne = true;
+            for(var i=0; i<completedSteps.length; i++){
+                if(completedSteps[i] === "1"){
+                    addStepOne = false;
+                }
+            }
+            if(addStepOne === true){
+                completedSteps.push("1");
+            }
             Save_Cookie(saveArray, "stepOne", completedSteps);
-            //JSON_Cookie_Step_Two(cookieData, completedSteps);
+            Check_Available_Steps(saveArray, completedSteps, "2");
         } else {
             // Failure
         }
     });
 
     // Assign Events to Back Button
+    $('#content_nav_back').click(function(){
+        if($('#content_nav_back').hasClass('content_nav_base_active')){
+            // Save Any Entered Data
+
+            // Enter Into Save Array
+            saveArray = {
+                stepOneQuestionOne: stepOneQuestionOneAnswer,
+                stepOneQuestionTwo: stepOneQuestionTwoAnswer,
+                stepOneQuestionThree: stepOneQuestionThreeAnswer
+            };
+
+            var addStepOne = true;
+            for(var i=0; i<completedSteps.length; i++){
+                if(completedSteps[i] === "1"){
+                    addStepOne = false;
+                }
+            }
+            if(addStepOne === true){
+                completedSteps.push("1");
+            }
+            Save_Cookie(saveArray, "stepOne", completedSteps);
+            Check_Available_Steps(saveArray, completedSteps, "2");
+        } else {
+            // Failure
+        }
+    });
     
     // Assign Events to Step Buttons
     $('#content_progress_bar_one').click(function(){
