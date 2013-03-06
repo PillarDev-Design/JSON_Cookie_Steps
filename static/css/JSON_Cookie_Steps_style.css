@@ -236,6 +236,9 @@ body, html{
         .content_step_question_select_scheme{
             width: 250px;
         }
+        .content_step_question_text_input_scheme{
+            width: 250px;
+        }
         #content_step_one_container{
             position: absolute;
         }

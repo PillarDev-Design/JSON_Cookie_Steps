@@ -495,7 +495,26 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
                 }
             }
 
-            // Additional Steps (TODO)
+            // Scale
+            $('#content_step_two_scale').val = stepTwoScale;
+
+            // Weed Management Area
+            $('#content_step_two_weed_management_area').val = stepTwoWeedManagementArea;
+
+            // Conservation Target Impacted
+            $('#content_step_two_conservation_target_impacted').val = stepTwoConservationTargetImpacted;
+
+            // Project Area Name And Size
+            $('#content_step_two_project_area_name_and_size').val = stepTwoProjectAreaNameAndSize;
+
+            // Property Owner
+            $('#content_step_two_property_owner').val = stepTwoPropertyOwner;
+            
+            // IPMDAT Date Assessed
+            
+            // Assessors
+            
+            // Reviewers
         }
     }
 
@@ -508,48 +527,112 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
                 $('#content_nav_forward').removeClass('content_nav_base_inactive');
                 $('#content_nav_forward').addClass('content_nav_base_active');
                 // Progress Bar
-                $('#content_progress_bar_two').removeClass('progress_bar_inactive');
-                $('#content_progress_bar_two').addClass('progress_bar_available');
+                $('#content_progress_bar_three').removeClass('progress_bar_inactive');
+                $('#content_progress_bar_three').addClass('progress_bar_available');
             }
         } else if((q1 === null) || (q2 === null) || (q3 === null) || (q4 === null) || (q5 === null) || (q6 === null) || (q7 === null) || (q8 === null) || (q9 === null) || (q10 === null)){
             if($('#content_nav_forward').hasClass('content_nav_base_active')){
                 $('#content_nav_forward').removeClass('content_nav_base_active');
                 $('#content_nav_forward').addClass('content_nav_base_inactive');
                 // Progress Bar
-                $('#content_progress_bar_two').removeClass('progress_bar_available');
-                $('#content_progress_bar_two').addClass('progress_bar_inactive');
+                $('#content_progress_bar_three').removeClass('progress_bar_available');
+                $('#content_progress_bar_three').addClass('progress_bar_inactive');
             } 
         }
     };
     Step_Two_Form_Check(stepTwoScientificName, stepTwoCommonName, stepTwoScale, stepTwoWeedManagementArea, stepTwoConservationTargetImpacted, stepTwoProjectAreaNameAndSize, stepTwoPropertyOwner, stepTwoIPMDATDateAssessed, stepTwoAssessors, stepTwoReviewers)
 
     // Assign Events to Content Fields
-    $('#content_step_one_question_one').change(function(){
+    $('#content_step_two_scientific_name').change(function(){
         // Assign Variable
-        stepOneQuestionOneAnswer = $('#content_step_one_question_one').val();
-        stepOneQuestionTwoAnswer = null;
-        // Populate Second Select List
-        if(stepOneQuestionOneAnswer === 'mainCategoryOne'){
-            $('#content_step_one_question_two').empty().append(categoryOneSubcategories);
-        } else if(stepOneQuestionOneAnswer === 'mainCategoryTwo'){
-            $('#content_step_one_question_two').empty().append(categoryTwoSubcategories);
-        } else if(stepOneQuestionOneAnswer === 'mainCategoryThree'){
-            $('#content_step_one_question_two').empty().append(categoryThreeSubcategories);
+        stepTwoScientificName = $('#content_step_two_scientific_name').val();
+        
+        var tempLength = $('#content_step_two_scientific_name').prop('length'),
+            tempSelect = document.getElementById('content_step_two_scientific_name'),
+            tempSelectCommon = document.getElementById('content_step_two_common_name');
+        for(var i=0; i<tempLength; i++){
+            if(tempSelect.options[i].value === stepTwoScientificName){
+                tempSelectCommon.selectedIndex = i;
+            }
         }
-        $('#content_step_one_question_two').prop('selectedIndex', -1);
+        stepTwoCommonName = $('#content_step_two_common_name').val();
 
-        $('#content_step_one_question_two').change(function(){
-            // Assign Variable
-            stepOneQuestionTwoAnswer = $('#content_step_one_question_two').val();
-
-            // Execute Step_One_Form_Check
-            Step_One_Form_Check(stepOneQuestionOneAnswer, stepOneQuestionTwoAnswer, stepOneQuestionThreeAnswer);
-        });
-
-        // Execute Step_One_Form_Check
-        Step_One_Form_Check(stepOneQuestionOneAnswer, stepOneQuestionTwoAnswer, stepOneQuestionThreeAnswer);
+        // Execute Step_Two_Form_Check
+        Step_Two_Form_Check(stepTwoScientificName, stepTwoCommonName, stepTwoScale, stepTwoWeedManagementArea, stepTwoConservationTargetImpacted, stepTwoProjectAreaNameAndSize, stepTwoPropertyOwner, stepTwoIPMDATDateAssessed, stepTwoAssessors, stepTwoReviewers)
     });
 
+    $('#content_step_two_common_name').change(function(){
+        // Assign Variable
+        stepTwoCommonName = $('#content_step_two_common_name').val();
+        
+        var tempLength = $('#content_step_two_common_name').prop('length'),
+            tempSelect = document.getElementById('content_step_two_common_name'),
+            tempSelectScientific = document.getElementById('content_step_two_scientific_name');
+        for(var i=0; i<tempLength; i++){
+            if(tempSelect.options[i].value === stepTwoCommonName){
+                tempSelectScientific.selectedIndex = i;
+            }
+        }
+        stepTwoScientificName = $('#content_step_two_scientific_name').val();
+        
+        // Execute Step_Two_Form_Check
+        Step_Two_Form_Check(stepTwoScientificName, stepTwoCommonName, stepTwoScale, stepTwoWeedManagementArea, stepTwoConservationTargetImpacted, stepTwoProjectAreaNameAndSize, stepTwoPropertyOwner, stepTwoIPMDATDateAssessed, stepTwoAssessors, stepTwoReviewers)
+    });
+
+    $('#content_step_two_scale').change(function(){
+        if($('#content_two_scale').val() === ""){
+            stepTwoScale = null;
+        }else{
+            stepTwoScale = $('#content_step_two_scale').val();
+        }
+
+        // Execute Step_Two_Form_Check
+        Step_Two_Form_Check(stepTwoScientificName, stepTwoCommonName, stepTwoScale, stepTwoWeedManagementArea, stepTwoConservationTargetImpacted, stepTwoProjectAreaNameAndSize, stepTwoPropertyOwner, stepTwoIPMDATDateAssessed, stepTwoAssessors, stepTwoReviewers)
+    });
+
+    $('#content_step_two_weed_management_area').change(function(){
+        if($('#content_two_weed_management_area').val() === ""){
+            stepTwoWeedManagementArea = null;
+        }else{
+            stepTwoWeedManagementArea = $('#content_step_two_weed_management_area').val();
+        }
+
+        // Execute Step_Two_Form_Check
+        Step_Two_Form_Check(stepTwoScientificName, stepTwoCommonName, stepTwoScale, stepTwoWeedManagementArea, stepTwoConservationTargetImpacted, stepTwoProjectAreaNameAndSize, stepTwoPropertyOwner, stepTwoIPMDATDateAssessed, stepTwoAssessors, stepTwoReviewers)
+    });
+
+    $('#content_step_two_conservation_target_impacted').change(function(){
+        if($('#content_two_conservation_target_impacted').val() === ""){
+            stepTwoConservationTargetImpacted = null;
+        }else{
+            stepTwoConservationTargetImpacted = $('#content_step_two_conservation_target_impacted').val();
+        }
+
+        // Execute Step_Two_Form_Check
+        Step_Two_Form_Check(stepTwoScientificName, stepTwoCommonName, stepTwoScale, stepTwoWeedManagementArea, stepTwoConservationTargetImpacted, stepTwoProjectAreaNameAndSize, stepTwoPropertyOwner, stepTwoIPMDATDateAssessed, stepTwoAssessors, stepTwoReviewers)
+    });
+
+    $('#content_step_two_project_area_name_and_size').change(function(){
+        if($('#content_two_project_area_name_and_size').val() === ""){
+            stepTwoProjectAreaNameAndSize = null;
+        }else{
+            stepTwoProjectAreaNameAndSize = $('#content_step_two_project_area_name_and_size').val();
+        }
+
+        // Execute Step_Two_Form_Check
+        Step_Two_Form_Check(stepTwoScientificName, stepTwoCommonName, stepTwoScale, stepTwoWeedManagementArea, stepTwoConservationTargetImpacted, stepTwoProjectAreaNameAndSize, stepTwoPropertyOwner, stepTwoIPMDATDateAssessed, stepTwoAssessors, stepTwoReviewers)
+    });
+
+    $('#content_step_two_property_owner').change(function(){
+        if($('#content_two_property_owner').val() === ""){
+            stepTwoPropertyOwner = null;
+        }else{
+            stepTwoPropertyOwner = $('#content_step_two_property_owner').val();
+        }
+
+        // Execute Step_Two_Form_Check
+        Step_Two_Form_Check(stepTwoScientificName, stepTwoCommonName, stepTwoScale, stepTwoWeedManagementArea, stepTwoConservationTargetImpacted, stepTwoProjectAreaNameAndSize, stepTwoPropertyOwner, stepTwoIPMDATDateAssessed, stepTwoAssessors, stepTwoReviewers)
+    });
 
     // Assign Events to Next Button
     $('#content_nav_forward').click(function(){
@@ -567,6 +650,8 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
             // Failure
         }
     });
+
+    // Assign Events to Back Button
     
     // Assign Events to Step Buttons
     $('#content_progress_bar_one').click(function(){
