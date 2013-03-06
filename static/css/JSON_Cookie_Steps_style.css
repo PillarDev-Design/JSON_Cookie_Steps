@@ -205,6 +205,12 @@ body, html{
             position: relative;
             width: 100%;
         }
+        .content_step_active{
+            display: block !important;
+        }
+        .content_step_inactive{
+            display: none !important;
+        }
         .content_step_question_container_scheme{
             /* White */
             background: #FEFEFE;
@@ -235,7 +241,6 @@ body, html{
         }
         #content_step_two_container{
             position: absolute;
-            display: none;
         }
             #content_step_one_question_one_container{
                 top: 5%;
