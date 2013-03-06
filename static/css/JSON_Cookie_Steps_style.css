@@ -137,16 +137,16 @@ body, html{
             -webkit-border-radius: 15px;
         }
         .progress_bar_active{
-            /* Lighter Blue */
-            background: #BDDCE8; 
+            /* Light Yellow */
+            background: #FFDB4D;
         }
         .progress_bar_inactive{
             /* Light Grey */
             background: #CCC;
         }
         .progress_bar_available{
-            /* Light Yellow */
-            background: #FFDB4D;
+            /* Lighter Blue */
+            background: #BDDCE8; 
         }
         #content_progress_bar_one{
         }

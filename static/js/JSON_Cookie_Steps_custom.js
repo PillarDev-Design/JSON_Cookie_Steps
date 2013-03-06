@@ -434,6 +434,14 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
         $('#content_step_one_cotnainer').removeClass('content_step_active').addClass('content_step_inactive');
     }
 
+    // Enable Back Button
+    if($('#content_nav_back').hasClass('content_nav_base_inactive')){
+        // Forward
+        $('#content_nav_back').removeClass('content_nav_base_inactive');
+        $('#content_nav_back').addClass('content_nav_base_active');
+    }
+
+
     // Declare Variables
     var stepTwoScientificName = null,
         stepTwoCommonName = null,
@@ -455,65 +463,55 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
     // Check If Loading Data
     var completedStepsLength = completedSteps.length;
     for(var i=0; i<completedStepsLength; i++){
-        if(completedSteps[i] === "1"){
+        if(completedSteps[i] === "2"){
             // Load Question Answers
-            stepOneQuestionOneAnswer = cookieData.stepOneQuestionOne;
-            stepOneQuestionTwoAnswer = cookieData.stepOneQuestionTwo;
-            stepOneQuestionThreeAnswer = cookieData.stepOneQuestionThree;
+            stepTwoScientificName = cookieData.stepTwoScientificName;
+            stepTwoCommonName = cookieData.stepTwoCommonName;
+            stepTwoScale = cookieData.stepTwoScale;
+            stepTwoWeedManagementArea = cookieData.stepTwoWeedManagementArea;
+            stepTwoConservationTargetImpacted = cookieData.stepTwoConservationTargetImpacted;
+            stepTwoProjectAreaNameAndSize = cookieData.stepTwoProjectAreaNameAndSize;
+            stepTwoPropertyOwner = cookieData.stepTwoPropertyOwner;
+            stepTwoIPMDATDateAssessed = cookieData.stepTwoIPMDATDateAssessed;
+            stepTwoAssessors = cookieData.stepTwoAssessors;
+            stepTwoReviewers = cookieData.stepTwoReviewers;
 
             // Load Data
-            // Step One
-            var tempLength = $('#content_step_one_question_one').prop('length'),
-                tempSelect = document.getElementById('content_step_one_question_one');
-
+            // Scientific Name
+            var tempLength = $('#content_step_two_scientific_name').prop('length'),
+                tempSelect = document.getElementById('content_step_two_scientific_name');
             for(var i=0; i<tempLength; i++){
-                if(tempSelect.options[i].value === stepOneQuestionOneAnswer){
+                if(tempSelect.options[i].value === stepTwoScientificName){
                     tempSelect.selectedIndex = i;
                 }
             }
-            // Load Step Two Options
-            if(stepOneQuestionOneAnswer === 'mainCategoryOne'){
-                $('#content_step_one_question_two').empty().append(categoryOneSubcategories);
-            } else if(stepOneQuestionOneAnswer === 'mainCategoryTwo'){
-                $('#content_step_one_question_two').empty().append(categoryTwoSubcategories);
-            } else if(stepOneQuestionOneAnswer === 'mainCategoryThree'){
-                $('#content_step_one_question_two').empty().append(categoryThreeSubcategories);
-            }
-            // Step Two
-            tempLength = $('#content_step_one_question_two').prop('length');
-            tempSelect = document.getElementById('content_step_one_question_two');
 
+            // Common Name
+            tempLength = $('#content_step_two_common_name').prop('length');
+            tempSelect = document.getElementById('content_step_two_common_name');
             for(var i=0; i<tempLength; i++){
-                if(tempSelect.options[i].value === stepOneQuestionTwoAnswer){
+                if(tempSelect.options[i].value === stepTwoCommonName){
                     tempSelect.selectedIndex = i;
                 }
             }
-            // Step Three
-            tempLength = stepOneQuestionThreeAnswer.length;
-            for(var i=0; i<tempLength; i++){
-                if(stepOneQuestionThreeAnswer[i] === "none"){
-                    $('#content_step_one_question_three_box_one').prop('checked', true);
-                }else if(stepOneQuestionThreeAnswer[i] === "two"){
-                    $('#content_step_one_question_three_box_two').prop('checked', true);
-                }else if(stepOneQuestionThreeAnswer[i] === "three"){
-                    $('#content_step_one_question_three_box_three').prop('checked', true);
-                }
-            }
+
+            // Additional Steps (TODO)
         }
     }
 
     
     // Function to check if form is complete
-    function Step_One_Form_Check(q1, q2, q3){
-        if((q1 !== null) && (q2 !== null) && (q3 !== null)){
+    function Step_Two_Form_Check(q1, q2, q3, q4, q5, q6, q7, q8, q9, q10){
+        if((q1 !== null) && (q2 !== null) && (q3 !== null) && (q4 !== null) && (q5 !== null) && (q6 !== null) && (q7 !== null) && (q8 !== null) && (q9 !== null) && (q10 !== null)){
             if($('#content_nav_forward').hasClass('content_nav_base_inactive')){
+                // Forward
                 $('#content_nav_forward').removeClass('content_nav_base_inactive');
                 $('#content_nav_forward').addClass('content_nav_base_active');
                 // Progress Bar
                 $('#content_progress_bar_two').removeClass('progress_bar_inactive');
                 $('#content_progress_bar_two').addClass('progress_bar_available');
             }
-        } else if((q1 === null) || (q2 === null) || (q3 === null)){
+        } else if((q1 === null) || (q2 === null) || (q3 === null) || (q4 === null) || (q5 === null) || (q6 === null) || (q7 === null) || (q8 === null) || (q9 === null) || (q10 === null)){
             if($('#content_nav_forward').hasClass('content_nav_base_active')){
                 $('#content_nav_forward').removeClass('content_nav_base_active');
                 $('#content_nav_forward').addClass('content_nav_base_inactive');
@@ -523,7 +521,7 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
             } 
         }
     };
-    Step_One_Form_Check(stepOneQuestionOneAnswer, stepOneQuestionTwoAnswer, stepOneQuestionThreeAnswer);
+    Step_Two_Form_Check(stepTwoScientificName, stepTwoCommonName, stepTwoScale, stepTwoWeedManagementArea, stepTwoConservationTargetImpacted, stepTwoProjectAreaNameAndSize, stepTwoPropertyOwner, stepTwoIPMDATDateAssessed, stepTwoAssessors, stepTwoReviewers)
 
     // Assign Events to Content Fields
     $('#content_step_one_question_one').change(function(){
@@ -551,54 +549,7 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
         // Execute Step_One_Form_Check
         Step_One_Form_Check(stepOneQuestionOneAnswer, stepOneQuestionTwoAnswer, stepOneQuestionThreeAnswer);
     });
-    
-    
-    function Check_Boxes(){
-        if($('#content_step_one_question_three_box_one').is(':checked')){
-            stepOneQuestionThreeAnswer = ['none'];
-        } else if(($('#content_step_one_question_three_box_two').is(':checked')) && ($('#content_step_one_question_three_box_three').is(':checked'))){
-            stepOneQuestionThreeAnswer = ['two', 'three'];
-        } else if($('#content_step_one_question_three_box_two').is(':checked')){
-            stepOneQuestionThreeAnswer = ['two'];
-        } else if($('#content_step_one_question_three_box_three').is(':checked')){
-            stepOneQuestionThreeAnswer = ['three'];
-        } else {
-            stepOneQuestionThreeAnswer = null;
-        }
 
-        // Execute Step_One_Form_Check
-        Step_One_Form_Check(stepOneQuestionOneAnswer, stepOneQuestionTwoAnswer, stepOneQuestionThreeAnswer);
-    };
-
-    // *** Question Three Section ***
-    $('#content_step_one_question_three_box_one').change(function(){
-        if($('#content_step_one_question_three_box_one').is(':checked')){
-            // Uncheck the Other Boxes
-            if($('#content_step_one_question_three_box_two').is(':checked')){
-                $('#content_step_one_question_three_box_two').prop('checked', false);
-            }
-            if($('#content_step_one_question_three_box_three').is(':checked')){
-                $('#content_step_one_question_three_box_three').prop('checked', false);
-            }
-        }
-        Check_Boxes();
-    });
-    $('#content_step_one_question_three_box_two').change(function(){
-        if(($('#content_step_one_question_three_box_two').is(':checked')) || ($('#content_step_one_question_three_box_three').is(':checked'))){
-            if($('#content_step_one_question_three_box_one').is(':checked')){
-                $('#content_step_one_question_three_box_one').prop('checked', false);
-            }
-        }
-        Check_Boxes();
-    });
-    $('#content_step_one_question_three_box_three').change(function(){
-        if(($('#content_step_one_question_three_box_two').is(':checked')) || ($('#content_step_one_question_three_box_three').is(':checked'))){
-            if($('#content_step_one_question_three_box_one').is(':checked')){
-                $('#content_step_one_question_three_box_one').prop('checked', false);
-            }
-        }
-        Check_Boxes();
-    });
 
     // Assign Events to Next Button
     $('#content_nav_forward').click(function(){
@@ -619,31 +570,13 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
     
     // Assign Events to Step Buttons
     $('#content_progress_bar_one').click(function(){
-        // Clear Event
     });
     $('#content_progress_bar_two').click(function(){
-        // Continue to Step Two if Step 1 is completed.
-        if($('#content_nav_forward').hasClass('content_nav_base_active')){
-            // Fire off Save
-            saveArray = {
-                stepOneQuestionOne: stepOneQuestionOneAnswer,
-                stepOneQuestionTwo: stepOneQuestionTwoAnswer,
-                stepOneQuestionThree: stepOneQuestionThreeAnswer
-            };
-            completedSteps.push("1");
-            Save_Cookie(saveArray, "stepOne", completedSteps);
-            //JSON_Cookie_Step_Two(cookieData, completedSteps);
-        } else {
-            // Failure
-        }
     });
     $('#content_progress_bar_three').click(function(){
-
     });
     $('#content_progress_bar_four').click(function(){
-
     });
     $('#content_progress_bar_five').click(function(){
-
     });
 };
