@@ -224,7 +224,7 @@ function JSON_Cookie_Steps_Init(){
         cookieData.stepTwoAssessors = savedData.stepTwoAssessors;
         cookieData.stepTwoReviewers = savedData.stepTwoReviewers;
     }
-
+    
     // Fire off the initial Step (1)
     Check_Available_Steps(cookieData, completedSteps, currentStep);
 };
@@ -242,7 +242,7 @@ function JSON_Cookie_Step_One(cookieData, completedSteps, currentStep){
         $('#content_step_one_container').removeClass('content_step_inactive').addClass('content_step_active');
     }
     if($('#content_step_two_container').hasClass('content_step_active')){
-        $('#content_step_two_cotnainer').removeClass('content_step_active').addClass('content_step_inactive');
+        $('#content_step_two_container').removeClass('content_step_active').addClass('content_step_inactive');
     }
 
     // Declare Variables
@@ -427,9 +427,7 @@ function JSON_Cookie_Step_One(cookieData, completedSteps, currentStep){
                 completedSteps.push("1");
             }
             Save_Cookie(saveArray, "stepOne", completedSteps);
-            saveArray = $.JSONCookie(name);
-            console.log(saveArray);
-            Check_Available_Steps(saveArray, completedSteps, "2");
+            Check_Available_Steps(cookieData, completedSteps, "2");
         } else {
             // Failure
         }
@@ -461,14 +459,13 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
         $('#content_step_two_container').removeClass('content_step_inactive').addClass('content_step_active');
     }
     if($('#content_step_one_container').hasClass('content_step_active')){
-        $('#content_step_one_cotnainer').removeClass('content_step_active').addClass('content_step_inactive');
+        $('#content_step_one_container').removeClass('content_step_active').addClass('content_step_inactive');
     }
 
     // Enable Back Button
     if($('#content_nav_back').hasClass('content_nav_base_inactive')){
         // Forward
-        $('#content_nav_back').removeClass('content_nav_base_inactive');
-        $('#content_nav_back').addClass('content_nav_base_active');
+        $('#content_nav_back').removeClass('content_nav_base_inactive').addClass('content_nav_base_active');
     }
     
     // Unbind Recurring Buttons
@@ -495,7 +492,7 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
     // Enable the date picker
     new JsDatePick({
         useMode: 2,
-        target: 'content_step_two_ipmdate_date_assessed',
+        target: 'content_step_two_ipmdat_date_assessed',
         cellColorScheme: "../static/css/img/ocean_blue",
         limitToToday: true
     });
@@ -506,7 +503,6 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
     for(var i=0; i<completedStepsLength; i++){
         if(completedSteps[i] === "2"){
             // Load Question Answers
-            console.log(cookieData);
             stepTwoScientificNameAnswer = cookieData.stepTwoScientificName;
             stepTwoCommonNameAnswer = cookieData.stepTwoCommonName;
             stepTwoScaleAnswer = cookieData.stepTwoScale;
@@ -538,28 +534,28 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
             }
 
             // Scale
-            $('#content_step_two_scale').val = stepTwoScaleAnswer;
+            $('#content_step_two_scale').prop('value', stepTwoScaleAnswer);
 
             // Weed Management Area
-            $('#content_step_two_weed_management_area').val = stepTwoWeedManagementAreaAnswer;
+            $('#content_step_two_weed_management_area').prop('value', stepTwoWeedManagementAreaAnswer);
 
             // Conservation Target Impacted
-            $('#content_step_two_conservation_target_impacted').val = stepTwoConservationTargetImpactedAnswer;
+            $('#content_step_two_conservation_target_impacted').prop('value', stepTwoConservationTargetImpactedAnswer);
 
             // Project Area Name And Size
-            $('#content_step_two_project_area_name_and_size').val = stepTwoProjectAreaNameAndSizeAnswer;
+            $('#content_step_two_project_area_name_and_size').prop('value', stepTwoProjectAreaNameAndSizeAnswer);
 
             // Property Owner
-            $('#content_step_two_property_owner').val = stepTwoPropertyOwnerAnswer;
+            $('#content_step_two_property_owner').prop('value', stepTwoPropertyOwnerAnswer);
             
             // IPMDAT Date Assessed
-            $('#content_step_two_ipmdat_date_assessed').val = stepTwoIPMDATDateAssessedAnswer;
+            $('#content_step_two_ipmdat_date_assessed').prop('value', stepTwoIPMDATDateAssessedAnswer);
             
             // Assessors
-            $('#content_step_two_assessors').val = stepTwoAssessorsAnswer;
+            $('#content_step_two_assessors').prop('value', stepTwoAssessorsAnswer);
             
             // Reviewers
-            $('#content_step_two_reviewers').val = stepTwoReviewersAnswer;
+            $('#content_step_two_reviewers').prop('value', stepTwoReviewersAnswer);
         }
     }
 
@@ -580,6 +576,7 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
                 $('#content_nav_forward').removeClass('content_nav_base_inactive');
                 $('#content_nav_forward').addClass('content_nav_base_active');
                 // Progress Bar
+                console.log('Progress bar 3');
                 $('#content_progress_bar_three').removeClass('progress_bar_inactive');
                 $('#content_progress_bar_three').addClass('progress_bar_available');
             }
@@ -631,9 +628,9 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
         // Execute Step_Two_Form_Check
         Step_Two_Form_Check(stepTwoScientificNameAnswer, stepTwoCommonNameAnswer, stepTwoScaleAnswer, stepTwoWeedManagementAreaAnswer, stepTwoConservationTargetImpactedAnswer, stepTwoProjectAreaNameAndSizeAnswer, stepTwoPropertyOwnerAnswer, stepTwoIPMDATDateAssessedAnswer, stepTwoAssessorsAnswer, stepTwoReviewersAnswer);
     });
-
+    
     $('#content_step_two_scale').keyup(function(){
-        if($('#content_two_scale').val() === ""){
+        if($('#content_step_two_scale').prop('value') === ""){
             stepTwoScaleAnswer = null;
         }else{
             stepTwoScaleAnswer = $('#content_step_two_scale').val();
@@ -644,7 +641,7 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
     });
 
     $('#content_step_two_weed_management_area').keyup(function(){
-        if($('#content_two_weed_management_area').val() === ""){
+        if($('#content_step_two_weed_management_area').val() === ""){
             stepTwoWeedManagementAreaAnswer = null;
         }else{
             stepTwoWeedManagementAreaAnswer = $('#content_step_two_weed_management_area').val();
@@ -655,7 +652,7 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
     });
 
     $('#content_step_two_conservation_target_impacted').keyup(function(){
-        if($('#content_two_conservation_target_impacted').val() === ""){
+        if($('#content_step_two_conservation_target_impacted').val() === ""){
             stepTwoConservationTargetImpactedAnswer = null;
         }else{
             stepTwoConservationTargetImpactedAnswer = $('#content_step_two_conservation_target_impacted').val();
@@ -666,7 +663,7 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
     });
 
     $('#content_step_two_project_area_name_and_size').keyup(function(){
-        if($('#content_two_project_area_name_and_size').val() === ""){
+        if($('#content_step_two_project_area_name_and_size').val() === ""){
             stepTwoProjectAreaNameAndSizeAnswer = null;
         }else{
             stepTwoProjectAreaNameAndSizeAnswer = $('#content_step_two_project_area_name_and_size').val();
@@ -677,7 +674,7 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
     });
 
     $('#content_step_two_property_owner').keyup(function(){
-        if($('#content_two_property_owner').val() === ""){
+        if($('#content_step_two_property_owner').val() === ""){
             stepTwoPropertyOwnerAnswer = null;
         }else{
             stepTwoPropertyOwnerAnswer = $('#content_step_two_property_owner').val();
@@ -734,7 +731,7 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
                 completedSteps.push("2");
             }
             Save_Cookie(saveArray, "stepTwo", completedSteps);
-            Check_Available_Steps(saveArray, completedSteps, "3");
+            Check_Available_Steps(cookieData, completedSteps, "3");
         } else {
             // Failure
         }
@@ -744,25 +741,21 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
     $('#content_nav_back').click(function(){
         if($('#content_nav_back').hasClass('content_nav_base_active')){
             // Save Any Entered Data
-
-            // Enter Into Save Array
             saveArray = {
-                stepOneQuestionOne: stepOneQuestionOneAnswer,
-                stepOneQuestionTwo: stepOneQuestionTwoAnswer,
-                stepOneQuestionThree: stepOneQuestionThreeAnswer
+                stepTwoScientificName: stepTwoScientificNameAnswer,
+                stepTwoCommonName: stepTwoCommonNameAnswer,
+                stepTwoScale: stepTwoScaleAnswer,
+                stepTwoWeedManagementArea: stepTwoWeedManagementAreaAnswer,
+                stepTwoConservationTargetImpacted: stepTwoConservationTargetImpactedAnswer,
+                stepTwoProjectAreaNameAndSize: stepTwoProjectAreaNameAndSizeAnswer,
+                stepTwoPropertyOwner: stepTwoPropertyOwnerAnswer,
+                stepTwoIPMDATDateAssessed: stepTwoIPMDATDateAssessedAnswer,
+                stepTwoAssessors: stepTwoAssessorsAnswer,
+                stepTwoReviewers: stepTwoReviewersAnswer
             };
 
-            var addStepOne = true;
-            for(var i=0; i<completedSteps.length; i++){
-                if(completedSteps[i] === "1"){
-                    addStepOne = false;
-                }
-            }
-            if(addStepOne === true){
-                completedSteps.push("1");
-            }
-            Save_Cookie(saveArray, "stepOne", completedSteps);
-            Check_Available_Steps(saveArray, completedSteps, "2");
+            Save_Cookie(saveArray, "stepTwo", completedSteps);
+            Check_Available_Steps(cookieData, completedSteps, "1");
         } else {
             // Failure
         }
