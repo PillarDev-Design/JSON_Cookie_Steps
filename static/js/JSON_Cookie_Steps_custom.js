@@ -83,6 +83,20 @@ function Save_Cookie(cookieData, stepNumber, completedSteps){
  * currentStep (integer)                       *
 \***********************************************/
 function Check_Available_Steps(cookieData, completedSteps, currentStep){
+    // Clear Forward/Back Nav Bars
+    if($('#content_nav_forward').hasClass('content_nav_base_active')){
+        $('#content_nav_forward').removeClass('content_nav_base_active').addClass('content_nav_base_inactive');
+    }
+    if($('#content_nav_back').hasClass('content_nav_base_active')){
+        $('#content_nav_back').removeClass('content_nav_base_active').addClass('content_nav_base_inactive');
+    }
+
+    // Unbind Recurring Buttons
+    $('#content_nav_forward').unbind('click');
+    $('#content_nav_back').unbind('click');
+    $('#content_progress_bar_one').unbind('click');
+    $('#content_progress_bar_two').unbind('click');
+
     // Control Step Progress
     for(var i=0; i<completedSteps.length; i++){
         if(completedSteps[i] === "1"){
@@ -118,7 +132,25 @@ function Check_Available_Steps(cookieData, completedSteps, currentStep){
     }
 
     // Fire Correct Step
+    // Also - we need to clear the fields in preparation for input of fields.
+    // This needs to be done even if the step is completed. The user could have
+    //      backed a step (only partially completed). The fields that are
+    //      completed will be automatically filled on step function fired.
     if(currentStep === "1"){
+        // Clear Questions
+        $('#content_step_one_question_one').prop('selectedIndex', -1);
+        $('#content_step_one_question_two').empty();
+        if($('#content_step_one_question_three_box_one').is(':checked')){
+            $('#content_step_one_question_three_box_one').prop('checked', false);
+        }
+        if($('#content_step_one_question_three_box_two').is(':checked')){
+            $('#content_step_one_question_three_box_two').prop('checked', false);
+        }
+        if($('#content_step_one_question_three_box_three').is(':checked')){
+            $('#content_step_one_question_three_box_three').prop('checked', false);
+        }
+
+        // Progress Bars
         if($('#content_progress_bar_one').hasClass('progress_bar_inactive')){
             $('#content_progress_bar_one').removeClass('progress_bar_inactive');
         }
@@ -131,6 +163,19 @@ function Check_Available_Steps(cookieData, completedSteps, currentStep){
         }
         JSON_Cookie_Step_One(cookieData, completedSteps, currentStep);
     } else if(currentStep === "2"){
+        // Clear Questions
+        $('#content_step_two_scientific_name').prop('selectedIndex', -1);
+        $('#content_step_two_common_name').prop('selectedIndex', -1);
+        $('#content_step_two_scale').prop('value', "");
+        $('#content_step_two_weed_management_area').prop('value', "");
+        $('#content_step_two_conservation_target_impacted').prop('value', "");
+        $('#content_step_two_project_area_name_and_size').prop('value', "");
+        $('#content_step_two_property_owner').prop('value', "");
+        $('#content_step_two_ipmdat_date_assessed').prop('value', "");
+        $('#content_step_two_assessors').prop('value', "");
+        $('#content_step_two_reviewers').prop('value', "");
+
+        // Progress Bars
         if($('#content_progress_bar_two').hasClass('progress_bar_inactive')){
             $('#content_progress_bar_two').removeClass('progress_bar_inactive');
         }
@@ -272,7 +317,7 @@ function JSON_Cookie_Step_One(cookieData, completedSteps, currentStep){
             // Step One
             var tempLength = $('#content_step_one_question_one').prop('length'),
                 tempSelect = document.getElementById('content_step_one_question_one');
-
+            
             for(var i=0; i<tempLength; i++){
                 if(tempSelect.options[i].value === stepOneQuestionOneAnswer){
                     tempSelect.selectedIndex = i;
@@ -468,9 +513,6 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
         $('#content_nav_back').removeClass('content_nav_base_inactive').addClass('content_nav_base_active');
     }
     
-    // Unbind Recurring Buttons
-    $('#content_nav_forward').unbind('click');
-
     // Declare Variables
     var stepTwoScientificNameAnswer = null,
         stepTwoCommonNameAnswer = null,
@@ -576,7 +618,6 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
                 $('#content_nav_forward').removeClass('content_nav_base_inactive');
                 $('#content_nav_forward').addClass('content_nav_base_active');
                 // Progress Bar
-                console.log('Progress bar 3');
                 $('#content_progress_bar_three').removeClass('progress_bar_inactive');
                 $('#content_progress_bar_three').addClass('progress_bar_available');
             }
@@ -590,6 +631,7 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
             } 
         }
     };
+
     Step_Two_Form_Check(stepTwoScientificNameAnswer, stepTwoCommonNameAnswer, stepTwoScaleAnswer, stepTwoWeedManagementAreaAnswer, stepTwoConservationTargetImpactedAnswer, stepTwoProjectAreaNameAndSizeAnswer, stepTwoPropertyOwnerAnswer, stepTwoIPMDATDateAssessedAnswer, stepTwoAssessorsAnswer, stepTwoReviewersAnswer);
 
     // Assign Events to Content Fields
