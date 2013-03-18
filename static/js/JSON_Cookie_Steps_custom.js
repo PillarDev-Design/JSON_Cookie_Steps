@@ -27,7 +27,8 @@ function Save_Cookie(cookieData, stepNumber, completedSteps){
             stepTwoPropertyOwner: null,
             stepTwoIPMDATDateAssessed: null,
             stepTwoAssessors: null,
-            stepTwoReviewers: null
+            stepTwoReviewers: null,
+            stepThreeMainCategory: null
         };
 
     for(var i=0; i<completedSteps.length; i++){
@@ -69,8 +70,18 @@ function Save_Cookie(cookieData, stepNumber, completedSteps){
                 cookieArray.stepTwoAssessors = savedData.stepTwoAssessors;
                 cookieArray.stepTwoReviewers = savedData.stepTwoReviewers;
             }
+        }else if(completedSteps[i] === "3"){
+            if(stepNumber === "stepThree"){
+                // Entering New data from cookieData
+                cookieArray.stepThreeMainCategory = cookieData.stepThreeMainCategory;
+            }else{
+                // Recall OLD data from savedData
+                cookieArray.stepThreeMainCategory = savedData.stepThreeMainCategory;
+            }
         }
     }
+    
+    console.log(cookieArray);
 
     $.JSONCookie(name, cookieArray, {path: '/'});
 };
@@ -96,10 +107,14 @@ function Check_Available_Steps(cookieData, completedSteps, currentStep){
     $('#content_nav_back').unbind('click');
     $('#content_progress_bar_one').unbind('click');
     $('#content_progress_bar_two').unbind('click');
+    $('#content_progress_bar_three').unbind('click');
+    $('#content_progress_bar_four').unbind('click');
+    $('#content_progress_bar_five').unbind('click');
 
     // Control Step Progress
     for(var i=0; i<completedSteps.length; i++){
         if(completedSteps[i] === "1"){
+            // One
             if($('#content_progress_bar_one').hasClass('progress_bar_active')){
                 $('#content_progress_bar_one').removeClass('progress_bar_active');
             }
@@ -110,8 +125,8 @@ function Check_Available_Steps(cookieData, completedSteps, currentStep){
             }else{
                 $('#content_progress_bar_one').addClass('progress_bar_available');
             }
-        }
-        if(completedSteps[i] === "2"){
+
+            // Two
             if($('#content_progress_bar_two').hasClass('progress_bar_active')){
                 $('#content_progress_bar_two').removeClass('progress_bar_active');
             }
@@ -123,11 +138,35 @@ function Check_Available_Steps(cookieData, completedSteps, currentStep){
                 $('#content_progress_bar_two').addClass('progress_bar_available');
             }
         }
+        if(completedSteps[i] === "2"){
+            // Three
+            if($('#content_progress_bar_three').hasClass('progress_bar_active')){
+                $('#content_progress_bar_three').removeClass('progress_bar_active');
+            }
+            if($('#content_progress_bar_three').hasClass('progress_bar_inactive')){
+                $('#content_progress_bar_three').removeClass('progress_bar_inactive');
+            }
+            if($('#content_progress_bar_three').hasClass('progress_bar_available')){
+            }else{
+                $('#content_progress_bar_three').addClass('progress_bar_available');
+            }
+        }
         if(completedSteps[i] === "3"){
+            // Four
+            if($('#content_progress_bar_four').hasClass('progress_bar_active')){
+                $('#content_progress_bar_four').removeClass('progress_bar_active');
+            }
+            if($('#content_progress_bar_four').hasClass('progress_bar_inactive')){
+                $('#content_progress_bar_four').removeClass('progress_bar_inactive');
+            }
+            if($('#content_progress_bar_four').hasClass('progress_bar_available')){
+            }else{
+                $('#content_progress_bar_four').addClass('progress_bar_available');
+            }
         }
-        if(completedSteps[i] === "2"){
+        if(completedSteps[i] === "4"){
         }
-        if(completedSteps[i] === "2"){
+        if(completedSteps[i] === "5"){
         }
     }
 
@@ -188,7 +227,21 @@ function Check_Available_Steps(cookieData, completedSteps, currentStep){
         }
         JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep);
     } else if(currentStep === "3"){
+        // Clear Questions
+        $('#content_step_three_main_category').prop('selectedIndex', -1);
 
+        // Progress Bars
+        if($('#content_progress_bar_three').hasClass('progress_bar_inactive')){
+            $('#content_progress_bar_three').removeClass('progress_bar_inactive');
+        }
+        if($('#content_progress_bar_three').hasClass('progress_bar_available')){
+            $('#content_progress_bar_three').removeClass('progress_bar_available');
+        }
+        if($('#content_progress_bar_three').hasClass('progress_bar_active')){
+        }else{
+            $('#content_progress_bar_three').addClass('progress_bar_active');
+        }
+        JSON_Cookie_Step_Three(cookieData, completedSteps, currentStep);
     } else if(currentStep === "4"){
 
     } else if(currentStep === "5"){
@@ -216,7 +269,8 @@ function JSON_Cookie_Steps_Init(){
         stepTwoPropertyOwner: null,
         stepTwoIPMDATDateAssessed: null,
         stepTwoAssessors: null,
-        stepTwoReviewers: null
+        stepTwoReviewers: null,
+        stepThreeMainCategory: null
     },
         completedSteps = [],
         currentStep = "1",
@@ -243,7 +297,8 @@ function JSON_Cookie_Steps_Init(){
             stepTwoPropertyOwner: null,
             stepTwoIPMDATDateAssessed: null,
             stepTwoAssessors: null,
-            stepTwoReviewers: null
+            stepTwoReviewers: null,
+            stepThreeMainCategory: null
         };
         $.JSONCookie(name, cookieData, {path: '/'});
     });
@@ -269,7 +324,11 @@ function JSON_Cookie_Steps_Init(){
         cookieData.stepTwoAssessors = savedData.stepTwoAssessors;
         cookieData.stepTwoReviewers = savedData.stepTwoReviewers;
     }
-    
+    if(savedData.stepThreeMainCategory !== null){
+        completedSteps.push("3");
+        cookieData.stepThreeMainCategory = savedData.stepThreeMainCategory;
+    }
+
     // Fire off the initial Step (1)
     Check_Available_Steps(cookieData, completedSteps, currentStep);
 };
@@ -288,6 +347,9 @@ function JSON_Cookie_Step_One(cookieData, completedSteps, currentStep){
     }
     if($('#content_step_two_container').hasClass('content_step_active')){
         $('#content_step_two_container').removeClass('content_step_active').addClass('content_step_inactive');
+    }
+    if($('#content_step_three_container').hasClass('content_step_active')){
+        $('#content_step_three_container').removeClass('content_step_active').addClass('content_step_inactive');
     }
 
     // Declare Variables
@@ -462,13 +524,13 @@ function JSON_Cookie_Step_One(cookieData, completedSteps, currentStep){
                 stepOneQuestionThree: stepOneQuestionThreeAnswer
             };
 
-            var addStepOne = true;
+            var addStep = true;
             for(var i=0; i<completedSteps.length; i++){
                 if(completedSteps[i] === "1"){
-                    addStepOne = false;
+                    addStep = false;
                 }
             }
-            if(addStepOne === true){
+            if(addStep === true){
                 completedSteps.push("1");
             }
             Save_Cookie(saveArray, "stepOne", completedSteps);
@@ -482,12 +544,100 @@ function JSON_Cookie_Step_One(cookieData, completedSteps, currentStep){
     $('#content_progress_bar_one').click(function(){
     });
     $('#content_progress_bar_two').click(function(){
+        if($('#content_progress_bar_two').hasClass('progress_bar_available')){
+            // Save Any Entered Data
+            saveArray = {
+                stepOneQuestionOne: stepOneQuestionOneAnswer,
+                stepOneQuestionTwo: stepOneQuestionTwoAnswer,
+                stepOneQuestionThree: stepOneQuestionThreeAnswer
+            };
+
+            var addStep = true;
+            for(var i=0; i<completedSteps.length; i++){
+                if(completedSteps[i] === "1"){
+                    addStep = false;
+                }
+            }
+            if(addStep === true){
+                completedSteps.push("1");
+            }
+            Save_Cookie(saveArray, "stepOne", completedSteps);
+            Check_Available_Steps(cookieData, completedSteps, "2");
+        } else {
+            // Failure
+        }
     });
     $('#content_progress_bar_three').click(function(){
+        if($('#content_progress_bar_three').hasClass('progress_bar_available')){
+            // Save Any Entered Data
+            saveArray = {
+                stepOneQuestionOne: stepOneQuestionOneAnswer,
+                stepOneQuestionTwo: stepOneQuestionTwoAnswer,
+                stepOneQuestionThree: stepOneQuestionThreeAnswer
+            };
+
+            var addStep = true;
+            for(var i=0; i<completedSteps.length; i++){
+                if(completedSteps[i] === "1"){
+                    addStep = false;
+                }
+            }
+            if(addStep === true){
+                completedSteps.push("1");
+            }
+            Save_Cookie(saveArray, "stepOne", completedSteps);
+            Check_Available_Steps(cookieData, completedSteps, "3");
+        } else {
+            // Failure
+        }
     });
     $('#content_progress_bar_four').click(function(){
+        if($('#content_progress_bar_four').hasClass('progress_bar_available')){
+            // Save Any Entered Data
+            saveArray = {
+                stepOneQuestionOne: stepOneQuestionOneAnswer,
+                stepOneQuestionTwo: stepOneQuestionTwoAnswer,
+                stepOneQuestionThree: stepOneQuestionThreeAnswer
+            };
+
+            var addStep = true;
+            for(var i=0; i<completedSteps.length; i++){
+                if(completedSteps[i] === "1"){
+                    addStep = false;
+                }
+            }
+            if(addStep === true){
+                completedSteps.push("1");
+            }
+            Save_Cookie(saveArray, "stepOne", completedSteps);
+            Check_Available_Steps(cookieData, completedSteps, "4");
+        } else {
+            // Failure
+        }
     });
     $('#content_progress_bar_five').click(function(){
+        if($('#content_progress_bar_five').hasClass('progress_bar_available')){
+            // Save Any Entered Data
+            saveArray = {
+                stepOneQuestionOne: stepOneQuestionOneAnswer,
+                stepOneQuestionTwo: stepOneQuestionTwoAnswer,
+                stepOneQuestionThree: stepOneQuestionThreeAnswer
+            };
+
+            var addStep = true;
+            for(var i=0; i<completedSteps.length; i++){
+                if(completedSteps[i] === "1"){
+                    addStep = false;
+                }
+            }
+            if(addStep === true){
+                completedSteps.push("1");
+            }
+            Save_Cookie(saveArray, "stepOne", completedSteps);
+            Check_Available_Steps(cookieData, completedSteps, "5");
+        } else {
+            // Failure
+        }
     });
 };
 
@@ -505,6 +655,9 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
     }
     if($('#content_step_one_container').hasClass('content_step_active')){
         $('#content_step_one_container').removeClass('content_step_active').addClass('content_step_inactive');
+    }
+    if($('#content_step_three_container').hasClass('content_step_active')){
+        $('#content_step_three_container').removeClass('content_step_active').addClass('content_step_inactive');
     }
 
     // Enable Back Button
@@ -763,13 +916,13 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
                 stepTwoReviewers: stepTwoReviewersAnswer
             };
 
-            var addStepOne = true;
+            var addStep = true;
             for(var i=0; i<completedSteps.length; i++){
                 if(completedSteps[i] === "2"){
-                    addStepOne = false;
+                    addStep = false;
                 }
             }
-            if(addStepOne === true){
+            if(addStep === true){
                 completedSteps.push("2");
             }
             Save_Cookie(saveArray, "stepTwo", completedSteps);
@@ -796,6 +949,288 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
                 stepTwoReviewers: stepTwoReviewersAnswer
             };
 
+            var addStep = true;
+            for(var i=0; i<completedSteps.length; i++){
+                if(completedSteps[i] === "2"){
+                    addStep = false;
+                }
+            }
+            if(addStep === true){
+                completedSteps.push("2");
+            }
+            Save_Cookie(saveArray, "stepTwo", completedSteps);
+            Check_Available_Steps(cookieData, completedSteps, "1");
+        } else {
+            // Failure
+        }
+    });
+    
+    // Assign Events to Step Buttons
+    $('#content_progress_bar_one').click(function(){
+        if($('#content_progress_bar_one').hasClass('progress_bar_available')){
+            // Save Any Entered Data
+            saveArray = {
+                stepTwoScientificName: stepTwoScientificNameAnswer,
+                stepTwoCommonName: stepTwoCommonNameAnswer,
+                stepTwoScale: stepTwoScaleAnswer,
+                stepTwoWeedManagementArea: stepTwoWeedManagementAreaAnswer,
+                stepTwoConservationTargetImpacted: stepTwoConservationTargetImpactedAnswer,
+                stepTwoProjectAreaNameAndSize: stepTwoProjectAreaNameAndSizeAnswer,
+                stepTwoPropertyOwner: stepTwoPropertyOwnerAnswer,
+                stepTwoIPMDATDateAssessed: stepTwoIPMDATDateAssessedAnswer,
+                stepTwoAssessors: stepTwoAssessorsAnswer,
+                stepTwoReviewers: stepTwoReviewersAnswer
+            };
+
+            var addStep = true;
+            for(var i=0; i<completedSteps.length; i++){
+                if(completedSteps[i] === "2"){
+                    addStep = false;
+                }
+            }
+            if(addStep === true){
+                completedSteps.push("2");
+            }
+            Save_Cookie(saveArray, "stepTwo", completedSteps);
+            Check_Available_Steps(cookieData, completedSteps, "1");
+        } else {
+            // Failure
+        }
+    });
+    $('#content_progress_bar_two').click(function(){
+    });
+    $('#content_progress_bar_three').click(function(){
+        if($('#content_progress_bar_three').hasClass('progress_bar_available')){
+            // Save Any Entered Data
+            saveArray = {
+                stepTwoScientificName: stepTwoScientificNameAnswer,
+                stepTwoCommonName: stepTwoCommonNameAnswer,
+                stepTwoScale: stepTwoScaleAnswer,
+                stepTwoWeedManagementArea: stepTwoWeedManagementAreaAnswer,
+                stepTwoConservationTargetImpacted: stepTwoConservationTargetImpactedAnswer,
+                stepTwoProjectAreaNameAndSize: stepTwoProjectAreaNameAndSizeAnswer,
+                stepTwoPropertyOwner: stepTwoPropertyOwnerAnswer,
+                stepTwoIPMDATDateAssessed: stepTwoIPMDATDateAssessedAnswer,
+                stepTwoAssessors: stepTwoAssessorsAnswer,
+                stepTwoReviewers: stepTwoReviewersAnswer
+            };
+
+            var addStep = true;
+            for(var i=0; i<completedSteps.length; i++){
+                if(completedSteps[i] === "2"){
+                    addStep = false;
+                }
+            }
+            if(addStep === true){
+                completedSteps.push("2");
+            }
+            Save_Cookie(saveArray, "stepTwo", completedSteps);
+            Check_Available_Steps(cookieData, completedSteps, "3");
+        } else {
+            // Failure
+        }
+    });
+    $('#content_progress_bar_four').click(function(){
+        if($('#content_progress_bar_four').hasClass('progress_bar_available')){
+            // Save Any Entered Data
+            saveArray = {
+                stepTwoScientificName: stepTwoScientificNameAnswer,
+                stepTwoCommonName: stepTwoCommonNameAnswer,
+                stepTwoScale: stepTwoScaleAnswer,
+                stepTwoWeedManagementArea: stepTwoWeedManagementAreaAnswer,
+                stepTwoConservationTargetImpacted: stepTwoConservationTargetImpactedAnswer,
+                stepTwoProjectAreaNameAndSize: stepTwoProjectAreaNameAndSizeAnswer,
+                stepTwoPropertyOwner: stepTwoPropertyOwnerAnswer,
+                stepTwoIPMDATDateAssessed: stepTwoIPMDATDateAssessedAnswer,
+                stepTwoAssessors: stepTwoAssessorsAnswer,
+                stepTwoReviewers: stepTwoReviewersAnswer
+            };
+
+            var addStep = true;
+            for(var i=0; i<completedSteps.length; i++){
+                if(completedSteps[i] === "2"){
+                    addStep = false;
+                }
+            }
+            if(addStep === true){
+                completedSteps.push("2");
+            }
+            Save_Cookie(saveArray, "stepTwo", completedSteps);
+            Check_Available_Steps(cookieData, completedSteps, "4");
+        } else {
+            // Failure
+        }
+    });
+    $('#content_progress_bar_five').click(function(){
+        if($('#content_progress_bar_five').hasClass('progress_bar_available')){
+            // Save Any Entered Data
+            saveArray = {
+                stepTwoScientificName: stepTwoScientificNameAnswer,
+                stepTwoCommonName: stepTwoCommonNameAnswer,
+                stepTwoScale: stepTwoScaleAnswer,
+                stepTwoWeedManagementArea: stepTwoWeedManagementAreaAnswer,
+                stepTwoConservationTargetImpacted: stepTwoConservationTargetImpactedAnswer,
+                stepTwoProjectAreaNameAndSize: stepTwoProjectAreaNameAndSizeAnswer,
+                stepTwoPropertyOwner: stepTwoPropertyOwnerAnswer,
+                stepTwoIPMDATDateAssessed: stepTwoIPMDATDateAssessedAnswer,
+                stepTwoAssessors: stepTwoAssessorsAnswer,
+                stepTwoReviewers: stepTwoReviewersAnswer
+            };
+
+            var addStep = true;
+            for(var i=0; i<completedSteps.length; i++){
+                if(completedSteps[i] === "2"){
+                    addStep = false;
+                }
+            }
+            if(addStep === true){
+                completedSteps.push("2");
+            }
+            Save_Cookie(saveArray, "stepTwo", completedSteps);
+            Check_Available_Steps(cookieData, completedSteps, "5");
+        } else {
+            // Failure
+        }
+    });
+};
+
+/***********************************************\
+ * Step 3                                      *
+ * ------------------------------------------- *
+ * cookieData (array of saved data)            *
+ * completedSteps (array of completed step #'s *
+ * currentStep (integer)                       *
+\***********************************************/
+function JSON_Cookie_Step_Three(cookieData, completedSteps, currentStep){
+    // Ensure Step One is visible and all others are display:none;
+    if($('#content_step_three_container').hasClass('content_step_inactive')){
+        $('#content_step_three_container').removeClass('content_step_inactive').addClass('content_step_active');
+    }
+    if($('#content_step_one_container').hasClass('content_step_active')){
+        $('#content_step_one_container').removeClass('content_step_active').addClass('content_step_inactive');
+    }
+    if($('#content_step_two_container').hasClass('content_step_active')){
+        $('#content_step_two_container').removeClass('content_step_active').addClass('content_step_inactive');
+    }
+
+    // Enable Back Button
+    if($('#content_nav_back').hasClass('content_nav_base_inactive')){
+        // Forward
+        $('#content_nav_back').removeClass('content_nav_base_inactive').addClass('content_nav_base_active');
+    }
+    
+    // Declare Variables
+    var stepThreeMainCategoryAnswer = null,
+        saveArray = {};
+
+
+    // Make the Select Lists Blank
+    $('#content_step_three_main_category').prop('selectedIndex', -1);
+    
+    // Check If Loading Data
+    var completedStepsLength = completedSteps.length;
+    for(var i=0; i<completedStepsLength; i++){
+        if(completedSteps[i] === "3"){
+            // Load Question Answers
+            stepThreeMainCategoryAnswer = cookieData.stepThreeMainCategory;
+
+            // Load Data
+            // Scientific Name
+            var tempLength = $('#content_step_three_main_category').prop('length'),
+                tempSelect = document.getElementById('content_step_three_main_category');
+            for(var i=0; i<tempLength; i++){
+                if(tempSelect.options[i].value === stepThreeMainCategoryAnswer){
+                    tempSelect.selectedIndex = i;
+                }
+            }
+        }
+    }
+
+    
+    // Function to check if form is complete
+    function Step_Three_Form_Check(q1){
+        if((q1 !== null)){
+            if($('#content_nav_forward').hasClass('content_nav_base_inactive')){
+                // Forward
+                $('#content_nav_forward').removeClass('content_nav_base_inactive');
+                $('#content_nav_forward').addClass('content_nav_base_active');
+                // Progress Bar
+                $('#content_progress_bar_four').removeClass('progress_bar_inactive');
+                $('#content_progress_bar_four').addClass('progress_bar_available');
+            }
+        } else if((q1 === null)){
+            if($('#content_nav_forward').hasClass('content_nav_base_active')){
+                // Foward
+                $('#content_nav_forward').removeClass('content_nav_base_active');
+                $('#content_nav_forward').addClass('content_nav_base_inactive');
+                // Progress Bar
+                $('#content_progress_bar_four').removeClass('progress_bar_available');
+                $('#content_progress_bar_four').addClass('progress_bar_inactive');
+            } 
+        }
+    };
+
+    Step_Three_Form_Check(stepThreeMainCategoryAnswer);
+
+    // Assign Events to Content Fields
+    $('#content_step_three_main_category').change(function(){
+        // Assign Variable
+        stepThreeMainCategoryAnswer = $('#content_step_three_main_category').val();
+
+        // Execute Step_Three_Form_Check
+        Step_Three_Form_Check(stepThreeMainCategoryAnswer);
+    });
+
+    // Assign Events to Next Button
+    $('#content_nav_forward').click(function(){
+        if($('#content_nav_forward').hasClass('content_nav_base_active')){
+            // Fire off Save
+            saveArray = {
+                stepThreeMainCategory: stepThreeMainCategoryAnswer
+            };
+
+            var addStep = true;
+            for(var i=0; i<completedSteps.length; i++){
+                if(completedSteps[i] === "3"){
+                    addStep = false;
+                }
+            }
+            if(addStep === true){
+                completedSteps.push("3");
+            }
+            Save_Cookie(saveArray, "stepThree", completedSteps);
+            Check_Available_Steps(cookieData, completedSteps, "4");
+        } else {
+            // Failure
+        }
+    });
+
+    // Assign Events to Back Button
+    $('#content_nav_back').click(function(){
+        if($('#content_nav_back').hasClass('content_nav_base_active')){
+            // Save Any Entered Data
+            saveArray = {
+                stepTwoScientificName: stepTwoScientificNameAnswer,
+                stepTwoCommonName: stepTwoCommonNameAnswer,
+                stepTwoScale: stepTwoScaleAnswer,
+                stepTwoWeedManagementArea: stepTwoWeedManagementAreaAnswer,
+                stepTwoConservationTargetImpacted: stepTwoConservationTargetImpactedAnswer,
+                stepTwoProjectAreaNameAndSize: stepTwoProjectAreaNameAndSizeAnswer,
+                stepTwoPropertyOwner: stepTwoPropertyOwnerAnswer,
+                stepTwoIPMDATDateAssessed: stepTwoIPMDATDateAssessedAnswer,
+                stepTwoAssessors: stepTwoAssessorsAnswer,
+                stepTwoReviewers: stepTwoReviewersAnswer
+            };
+
+            var addStep = true;
+            for(var i=0; i<completedSteps.length; i++){
+                if(completedSteps[i] === "2"){
+                    addStep = false;
+                }
+            }
+            if(addStep === true){
+                completedSteps.push("2");
+            }
             Save_Cookie(saveArray, "stepTwo", completedSteps);
             Check_Available_Steps(cookieData, completedSteps, "1");
         } else {
@@ -815,3 +1250,4 @@ function JSON_Cookie_Step_Two(cookieData, completedSteps, currentStep){
     $('#content_progress_bar_five').click(function(){
     });
 };
+
