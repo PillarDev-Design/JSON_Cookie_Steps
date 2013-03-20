@@ -305,13 +305,13 @@ function JSON_Cookie_Steps_Init(){
 
     // Check For Previous Data
     var savedData = $.JSONCookie(name);
-    if(savedData.stepOneQuestionOne !== null){
+    if((savedData.stepOneQuestionOne !== null)&&(savedData.stepOneQuestionTwo !== null)&&(savedData.stepOneQuestionThree !== null)){
         completedSteps.push("1");
         cookieData.stepOneQuestionOne = savedData.stepOneQuestionOne;
         cookieData.stepOneQuestionTwo = savedData.stepOneQuestionTwo;
         cookieData.stepOneQuestionThree = savedData.stepOneQuestionThree;
     }
-    if(savedData.stepTwoScientificName !== null){
+    if((savedData.stepTwoScientificName !== null)&&(savedData.stepTwoCommonName !== null)&&(savedData.stepTwoScale !== null)&&(savedData.stepTwoWeedManagementArea !== null)&&(savedData.stepTwoConservationTargetImpacted !== null)&&(savedData.stepTwoProjectAreaNameAndSize !== null)&&(savedData.stepTwoPropertyOwner !== null)&&(savedData.stepTwoIPMDATDateAssessed !== null)&&(savedData.stepTwoAssessors !== null)&&(savedData.stepTwoReviewers !== null)){
         completedSteps.push("2");
         cookieData.stepTwoScientificName = savedData.stepTwoScientificName;
         cookieData.stepTwoCommonName = savedData.stepTwoCommonName;
@@ -1210,18 +1210,34 @@ function JSON_Cookie_Step_Three(cookieData, completedSteps, currentStep){
         if($('#content_nav_back').hasClass('content_nav_base_active')){
             // Save Any Entered Data
             saveArray = {
-                stepTwoScientificName: stepTwoScientificNameAnswer,
-                stepTwoCommonName: stepTwoCommonNameAnswer,
-                stepTwoScale: stepTwoScaleAnswer,
-                stepTwoWeedManagementArea: stepTwoWeedManagementAreaAnswer,
-                stepTwoConservationTargetImpacted: stepTwoConservationTargetImpactedAnswer,
-                stepTwoProjectAreaNameAndSize: stepTwoProjectAreaNameAndSizeAnswer,
-                stepTwoPropertyOwner: stepTwoPropertyOwnerAnswer,
-                stepTwoIPMDATDateAssessed: stepTwoIPMDATDateAssessedAnswer,
-                stepTwoAssessors: stepTwoAssessorsAnswer,
-                stepTwoReviewers: stepTwoReviewersAnswer
+                stepThreeMainCategory: stepThreeMainCategoryAnswer
             };
 
+            var addStep = true;
+            for(var i=0; i<completedSteps.length; i++){
+                if(completedSteps[i] === "3"){
+                    addStep = false;
+                }
+            }
+            if(addStep === true){
+                completedSteps.push("3");
+            }
+            Save_Cookie(saveArray, "stepThree", completedSteps);
+            Check_Available_Steps(cookieData, completedSteps, "2");
+        } else {
+            // Failure
+        }
+    });
+    
+    // Assign Events to Step Buttons
+    $('#content_progress_bar_one').click(function(){
+        if($('#content_progress_bar_one').hasClass('progress_bar_available')){
+            // Save Any Entered Data
+            saveArray = {
+                stepThreeMainCategory: stepThreeMainCategoryAnswer
+            };
+            
+            /*
             var addStep = true;
             for(var i=0; i<completedSteps.length; i++){
                 if(completedSteps[i] === "2"){
@@ -1231,15 +1247,13 @@ function JSON_Cookie_Step_Three(cookieData, completedSteps, currentStep){
             if(addStep === true){
                 completedSteps.push("2");
             }
-            Save_Cookie(saveArray, "stepTwo", completedSteps);
+            */
+
+            Save_Cookie(saveArray, "stepThree", completedSteps);
             Check_Available_Steps(cookieData, completedSteps, "1");
         } else {
             // Failure
         }
-    });
-    
-    // Assign Events to Step Buttons
-    $('#content_progress_bar_one').click(function(){
     });
     $('#content_progress_bar_two').click(function(){
     });
@@ -1251,3 +1265,24 @@ function JSON_Cookie_Step_Three(cookieData, completedSteps, currentStep){
     });
 };
 
+/***********************************************\
+ * Step 4                                      *
+ * ------------------------------------------- *
+ * cookieData (array of saved data)            *
+ * completedSteps (array of completed step #'s *
+ * currentStep (integer)                       *
+\***********************************************/
+function JSON_Cookie_Step_Four(cookieData, completedSteps, currentStep){
+
+};
+
+/***********************************************\
+ * Step 5                                      *
+ * ------------------------------------------- *
+ * cookieData (array of saved data)            *
+ * completedSteps (array of completed step #'s *
+ * currentStep (integer)                       *
+\***********************************************/
+function JSON_Cookie_Step_Five(cookieData, completedSteps, currentStep){
+
+};
