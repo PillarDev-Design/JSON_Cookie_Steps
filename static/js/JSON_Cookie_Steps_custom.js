@@ -356,6 +356,11 @@ function JSON_Cookie_Step_One(cookieData, completedSteps, currentStep){
     var stepOneQuestionOneAnswer = null,
         stepOneQuestionTwoAnswer = null,
         stepOneQuestionThreeAnswer = null,
+        stepOneArray = {
+            questionOneAnswer: null,
+            questionTwoAnswer: null,
+            questionThreeAnswer: null
+        },
         saveArray = {};
 
     // Subcategory Values
@@ -371,9 +376,9 @@ function JSON_Cookie_Step_One(cookieData, completedSteps, currentStep){
     for(var i=0; i<completedStepsLength; i++){
         if(completedSteps[i] === "1"){
             // Load Question Answers
-            stepOneQuestionOneAnswer = cookieData.stepOneQuestionOne;
-            stepOneQuestionTwoAnswer = cookieData.stepOneQuestionTwo;
-            stepOneQuestionThreeAnswer = cookieData.stepOneQuestionThree;
+            stepOneArray.questionOneAnswer = cookieData.stepOneQuestionOne;
+            stepOneArray.questionTwoAnswer = cookieData.stepOneQuestionTwo;
+            stepOneArray.questionThreeAnswer = cookieData.stepOneQuestionThree;
 
             // Load Data
             // Step One
@@ -381,35 +386,38 @@ function JSON_Cookie_Step_One(cookieData, completedSteps, currentStep){
                 tempSelect = document.getElementById('content_step_one_question_one');
             
             for(var i=0; i<tempLength; i++){
-                if(tempSelect.options[i].value === stepOneQuestionOneAnswer){
+                if(tempSelect.options[i].value === stepOneArray.questionOneAnswer){
                     tempSelect.selectedIndex = i;
                 }
             }
+
             // Load Step Two Options
-            if(stepOneQuestionOneAnswer === 'mainCategoryOne'){
+            if(stepOneArray.questionOneAnswer === 'mainCategoryOne'){
                 $('#content_step_one_question_two').empty().append(categoryOneSubcategories);
-            } else if(stepOneQuestionOneAnswer === 'mainCategoryTwo'){
+            }else if(stepOneArray.questionOneAnswer === 'mainCategoryTwo'){
                 $('#content_step_one_question_two').empty().append(categoryTwoSubcategories);
-            } else if(stepOneQuestionOneAnswer === 'mainCategoryThree'){
+            }else if(stepOneArray.questionOneAnswer === 'mainCategoryThree'){
                 $('#content_step_one_question_two').empty().append(categoryThreeSubcategories);
             }
+
             // Step Two
             tempLength = $('#content_step_one_question_two').prop('length');
             tempSelect = document.getElementById('content_step_one_question_two');
 
             for(var i=0; i<tempLength; i++){
-                if(tempSelect.options[i].value === stepOneQuestionTwoAnswer){
+                if(tempSelect.options[i].value === stepOneArray.questionTwoAnswer){
                     tempSelect.selectedIndex = i;
                 }
             }
+
             // Step Three
-            tempLength = stepOneQuestionThreeAnswer.length;
+            tempLength = stepOneArray.questionThreeAnswer.length;
             for(var i=0; i<tempLength; i++){
-                if(stepOneQuestionThreeAnswer[i] === "none"){
+                if(stepOneArray.questionThreeAnswer[i] === "none"){
                     $('#content_step_one_question_three_box_one').prop('checked', true);
-                }else if(stepOneQuestionThreeAnswer[i] === "two"){
+                }else if(stepOneArray.questionThreeAnswer[i] === "two"){
                     $('#content_step_one_question_three_box_two').prop('checked', true);
-                }else if(stepOneQuestionThreeAnswer[i] === "three"){
+                }else if(stepOneArray.questionThreeAnswer[i] === "three"){
                     $('#content_step_one_question_three_box_three').prop('checked', true);
                 }
             }
@@ -418,8 +426,8 @@ function JSON_Cookie_Step_One(cookieData, completedSteps, currentStep){
 
     
     // Function to check if form is complete
-    function Step_One_Form_Check(q1, q2, q3){
-        if((q1 !== null) && (q2 !== null) && (q3 !== null)){
+    function Step_One_Form_Check(form_array){
+        if((form_array.questionOneAnswer !== null)&&(form_array.questionTwoAnswer !== null)&&(form_array.questionThreeAnswer !== null)){
             if($('#content_nav_forward').hasClass('content_nav_base_inactive')){
                 $('#content_nav_forward').removeClass('content_nav_base_inactive');
                 $('#content_nav_forward').addClass('content_nav_base_active');
@@ -427,7 +435,7 @@ function JSON_Cookie_Step_One(cookieData, completedSteps, currentStep){
                 $('#content_progress_bar_two').removeClass('progress_bar_inactive');
                 $('#content_progress_bar_two').addClass('progress_bar_available');
             }
-        } else if((q1 === null) || (q2 === null) || (q3 === null)){
+        }else if((form_array.questionOneAnswer === null)||(form_array.questionTwoAnswer === null)||(form_array.questionThreeAnswer === null)){
             if($('#content_nav_forward').hasClass('content_nav_base_active')){
                 $('#content_nav_forward').removeClass('content_nav_base_active');
                 $('#content_nav_forward').addClass('content_nav_base_inactive');
@@ -437,51 +445,52 @@ function JSON_Cookie_Step_One(cookieData, completedSteps, currentStep){
             } 
         }
     };
-    Step_One_Form_Check(stepOneQuestionOneAnswer, stepOneQuestionTwoAnswer, stepOneQuestionThreeAnswer);
+    
+    Step_One_Form_Check(stepOneArray);
 
     // Assign Events to Content Fields
     $('#content_step_one_question_one').change(function(){
         // Assign Variable
-        stepOneQuestionOneAnswer = $('#content_step_one_question_one').val();
-        stepOneQuestionTwoAnswer = null;
+        stepOneArray.questionOneAnswer = $('#content_step_one_question_one').val();
+        stepOneArray.questionTwoAnswer = null;
         // Populate Second Select List
-        if(stepOneQuestionOneAnswer === 'mainCategoryOne'){
+        if(stepOneArray.questionOneAnswer === 'mainCategoryOne'){
             $('#content_step_one_question_two').empty().append(categoryOneSubcategories);
-        } else if(stepOneQuestionOneAnswer === 'mainCategoryTwo'){
+        } else if(stepOneArray.questionOneAnswer === 'mainCategoryTwo'){
             $('#content_step_one_question_two').empty().append(categoryTwoSubcategories);
-        } else if(stepOneQuestionOneAnswer === 'mainCategoryThree'){
+        } else if(stepOneArray.questionOneAnswer === 'mainCategoryThree'){
             $('#content_step_one_question_two').empty().append(categoryThreeSubcategories);
         }
         $('#content_step_one_question_two').prop('selectedIndex', -1);
 
         $('#content_step_one_question_two').change(function(){
             // Assign Variable
-            stepOneQuestionTwoAnswer = $('#content_step_one_question_two').val();
+            stepOneArray.questionTwoAnswer = $('#content_step_one_question_two').val();
 
             // Execute Step_One_Form_Check
-            Step_One_Form_Check(stepOneQuestionOneAnswer, stepOneQuestionTwoAnswer, stepOneQuestionThreeAnswer);
+            Step_One_Form_Check(stepOneArray);
         });
 
         // Execute Step_One_Form_Check
-        Step_One_Form_Check(stepOneQuestionOneAnswer, stepOneQuestionTwoAnswer, stepOneQuestionThreeAnswer);
+        Step_One_Form_Check(stepOneArray);
     });
     
     
     function Check_Boxes(){
         if($('#content_step_one_question_three_box_one').is(':checked')){
-            stepOneQuestionThreeAnswer = ['none'];
+            stepOneArray.questionThreeAnswer = ['none'];
         } else if(($('#content_step_one_question_three_box_two').is(':checked')) && ($('#content_step_one_question_three_box_three').is(':checked'))){
-            stepOneQuestionThreeAnswer = ['two', 'three'];
+            stepOneArray.questionThreeAnswer = ['two', 'three'];
         } else if($('#content_step_one_question_three_box_two').is(':checked')){
-            stepOneQuestionThreeAnswer = ['two'];
+            stepOneArray.questionThreeAnswer = ['two'];
         } else if($('#content_step_one_question_three_box_three').is(':checked')){
-            stepOneQuestionThreeAnswer = ['three'];
+            stepOneArray.questionThreeAnswer = ['three'];
         } else {
-            stepOneQuestionThreeAnswer = null;
+            stepOneArray.questionThreeAnswer = null;
         }
 
         // Execute Step_One_Form_Check
-        Step_One_Form_Check(stepOneQuestionOneAnswer, stepOneQuestionTwoAnswer, stepOneQuestionThreeAnswer);
+        Step_One_Form_Check(stepOneArray);
     };
 
     // *** Question Three Section ***
@@ -513,17 +522,15 @@ function JSON_Cookie_Step_One(cookieData, completedSteps, currentStep){
         }
         Check_Boxes();
     });
-
-    // Assign Events to Next Button
-    $('#content_nav_forward').click(function(){
-        if($('#content_nav_forward').hasClass('content_nav_base_active')){
-            // Fire off Save
-            saveArray = {
-                stepOneQuestionOne: stepOneQuestionOneAnswer,
-                stepOneQuestionTwo: stepOneQuestionTwoAnswer,
-                stepOneQuestionThree: stepOneQuestionThreeAnswer
-            };
-
+    
+    function Step_One_Save(){
+        // Populate Save Array
+        saveArray = {
+            stepOneQuestionOne: stepOneArray.questionOneAnswer,
+            stepOneQuestionTwo: stepOneArray.questionTwoAnswer,
+            stepOneQuestionThree: stepOneArray.questionThreeAnswer
+        };
+        if((stepOneArray.questionOneAnswer !== null)&&(stepOneArray.questionTwoAnswer !== null)&&(stepOneArray.questionThreeAnswer !== null)){
             var addStep = true;
             for(var i=0; i<completedSteps.length; i++){
                 if(completedSteps[i] === "1"){
@@ -533,110 +540,41 @@ function JSON_Cookie_Step_One(cookieData, completedSteps, currentStep){
             if(addStep === true){
                 completedSteps.push("1");
             }
-            Save_Cookie(saveArray, "stepOne", completedSteps);
+        }
+        Save_Cookie(saveArray, "stepOne", completedSteps);
+    };
+
+    // Assign Events to Nav Buttons
+    $('#content_nav_forward').click(function(){
+        if($('#content_nav_forward').hasClass('content_nav_base_active')){
+            Step_One_Save();
             Check_Available_Steps(cookieData, completedSteps, "2");
-        } else {
-            // Failure
         }
     });
-    
-    // Assign Events to Step Buttons
     $('#content_progress_bar_one').click(function(){
     });
     $('#content_progress_bar_two').click(function(){
         if($('#content_progress_bar_two').hasClass('progress_bar_available')){
-            // Save Any Entered Data
-            saveArray = {
-                stepOneQuestionOne: stepOneQuestionOneAnswer,
-                stepOneQuestionTwo: stepOneQuestionTwoAnswer,
-                stepOneQuestionThree: stepOneQuestionThreeAnswer
-            };
-
-            var addStep = true;
-            for(var i=0; i<completedSteps.length; i++){
-                if(completedSteps[i] === "1"){
-                    addStep = false;
-                }
-            }
-            if(addStep === true){
-                completedSteps.push("1");
-            }
-            Save_Cookie(saveArray, "stepOne", completedSteps);
+            Step_One_Save();
             Check_Available_Steps(cookieData, completedSteps, "2");
-        } else {
-            // Failure
         }
     });
     $('#content_progress_bar_three').click(function(){
         if($('#content_progress_bar_three').hasClass('progress_bar_available')){
-            // Save Any Entered Data
-            saveArray = {
-                stepOneQuestionOne: stepOneQuestionOneAnswer,
-                stepOneQuestionTwo: stepOneQuestionTwoAnswer,
-                stepOneQuestionThree: stepOneQuestionThreeAnswer
-            };
-
-            var addStep = true;
-            for(var i=0; i<completedSteps.length; i++){
-                if(completedSteps[i] === "1"){
-                    addStep = false;
-                }
-            }
-            if(addStep === true){
-                completedSteps.push("1");
-            }
-            Save_Cookie(saveArray, "stepOne", completedSteps);
+            Step_One_Save();
             Check_Available_Steps(cookieData, completedSteps, "3");
-        } else {
-            // Failure
         }
     });
     $('#content_progress_bar_four').click(function(){
         if($('#content_progress_bar_four').hasClass('progress_bar_available')){
-            // Save Any Entered Data
-            saveArray = {
-                stepOneQuestionOne: stepOneQuestionOneAnswer,
-                stepOneQuestionTwo: stepOneQuestionTwoAnswer,
-                stepOneQuestionThree: stepOneQuestionThreeAnswer
-            };
-
-            var addStep = true;
-            for(var i=0; i<completedSteps.length; i++){
-                if(completedSteps[i] === "1"){
-                    addStep = false;
-                }
-            }
-            if(addStep === true){
-                completedSteps.push("1");
-            }
-            Save_Cookie(saveArray, "stepOne", completedSteps);
+            Step_One_Save();
             Check_Available_Steps(cookieData, completedSteps, "4");
-        } else {
-            // Failure
         }
     });
     $('#content_progress_bar_five').click(function(){
         if($('#content_progress_bar_five').hasClass('progress_bar_available')){
-            // Save Any Entered Data
-            saveArray = {
-                stepOneQuestionOne: stepOneQuestionOneAnswer,
-                stepOneQuestionTwo: stepOneQuestionTwoAnswer,
-                stepOneQuestionThree: stepOneQuestionThreeAnswer
-            };
-
-            var addStep = true;
-            for(var i=0; i<completedSteps.length; i++){
-                if(completedSteps[i] === "1"){
-                    addStep = false;
-                }
-            }
-            if(addStep === true){
-                completedSteps.push("1");
-            }
-            Save_Cookie(saveArray, "stepOne", completedSteps);
+            Step_One_Save();
             Check_Available_Steps(cookieData, completedSteps, "5");
-        } else {
-            // Failure
         }
     });
 };
